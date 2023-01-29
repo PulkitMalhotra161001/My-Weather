@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        Log.d("Sabse","Likh");
 
 
         cityNameTV = findViewById(R.id.idTVCityName);
@@ -64,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
             if (city.isEmpty()) {
                 Toast.makeText(MainActivity.this, "Please enter city name", Toast.LENGTH_SHORT).show();
             } else {
-                Log.d("Ab to aa","Aaa gya");
                 getWeatherInfo(city);
             }
         });
@@ -79,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
         @SuppressLint("NotifyDataSetChanged") JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, response -> {
             weatherRVModelArrayList.clear();
-            Log.d("Bahar","Haaji");
             try {
                 String temperature = response.getJSONObject("current").getString("temp_c")+"°c";
                 temperatureTV.setText(temperature);
@@ -87,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
                 String condition = response.getJSONObject("current").getJSONObject("condition").getString("text");
                 String conditionIcon = response.getJSONObject("current").getJSONObject("condition").getString("icon");
                 Picasso.get().load("http:".concat(conditionIcon)).into(iconIV);
-                Log.d("pulkit ",temperature+" "+isDay+" "+condition+" "+conditionIcon);
                 conditionTV.setText(condition);
                 if (isDay == 1) {
                     //morning
@@ -108,11 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     String wind = hourObj.getString("wind_kph");
 
                     weatherRVModelArrayList.add(new WeatherRVModel(time,temper,img,wind));
-                    Log.d("value",time+" "+temper+" "+img+" "+wind);
                 }
-
-                Log.d("size here: ",weatherRVModelArrayList.size()+"");
-                Toast.makeText(MainActivity.this, temperature+" "+isDay+" "+condition+" "+conditionIcon, Toast.LENGTH_SHORT).show();
 
                 weatherAdapter.notifyDataSetChanged();
 
